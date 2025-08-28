@@ -12,6 +12,7 @@ echo "$P1: I am doing well..$P2"
 N1=100
 N2=120
 
-sum=$N1+$N2
+sum=$(($N1+$N2))
+timestamp=$(date)
 
-echo "sum of $N1 and $N2=$sum" 
+echo "sum of $N1 and $N2=$sum at $timestamp" 
