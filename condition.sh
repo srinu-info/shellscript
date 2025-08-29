@@ -10,12 +10,12 @@ then
  echo "you are the root user"
 fi
 
-dnf install mysql11111 -y
+dnf install mysql -y
 
 if [ $? eq 0 ]
 then 
     echo " MySQl installing Success.."
     else
     echo "Installation Failure.."
-
+    exit 1
 fi
