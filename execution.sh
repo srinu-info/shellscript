@@ -8,19 +8,19 @@ N="\e[0m"
 
 if [ $USERID -ne 0 ]
 then
-echo "$R You are not root user,Please try with root user.-- $N"
+echo -e "$R You are not root user,Please try with root user.-- $N"
 exit 1
 else
-echo "$G You are root user---$N"
+echo -e "$G You are root user---$N"
 fi
 
 #----
 VALIDATE(){
     if [ $1 -eq 0 ]  
 then
-echo "$G Successfully installed $2---$N"
+echo -e  "$G Successfully installed $2---$N"
 else
-echo "$R $2 Installation failed---$N"
+echo -e "$R $2 Installation failed---$N"
 exit 1
 fi    
 }
@@ -30,11 +30,11 @@ fi
 dnf list installed mysql
 if [ $? -ne 0 ]
 then 
-echo "$Y Installing MySQL wait----$N"
+echo -e "$Y Installing MySQL wait----$N"
 dnf install mysql -y
 VALIDATE $? "mysql"
 else
-echo "$Y Already MySql Installed---$N"
+echo -e "$Y Already MySql Installed---$N"
 fi
 
 #---installation of nginx
@@ -42,11 +42,11 @@ fi
 dnf list installed nginx
 if [ $? -ne 0 ]
 then 
-echo "$Y Installing nginx wait----$N"
+echo -e "$Y Installing nginx wait----$N"
 dnf install nginx -y
 VALIDATE $? "nginx"
 else
-echo "$Y Already nginx Installed--$N"
+echo -e "$Y Already nginx Installed--$N"
 fi
 
 #---installation of git
@@ -54,12 +54,12 @@ fi
 dnf list installed git
 if [ $? -ne 0 ]
 then 
-echo "$Y Installing git wait----$N"
+echo -e "$Y Installing git wait----$N"
 
 dnf install git -y
 VALIDATE $? "git"
 else
-echo "$Y Already git Installed--$N"
+echo -e "$Y Already git Installed--$N"
 fi
 
 
