@@ -43,4 +43,5 @@ VALIDATE $? "$Packages"
 else
 echo -e "$Y Already $Packages Installed---$N" | tee -a $Log_file
 fi
+done
 
