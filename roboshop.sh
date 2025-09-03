@@ -9,7 +9,7 @@ DOMAIN_NAME="svdvps.online"
 
 for instances in ${INSTANCES[@]}
 do
-INSTANCE_ID=$(aws ec2 run-instances   --image-id ami-09c813fb71547fc4f  -instance-type t3.micro   --security-group-ids sg-0771b87321713642a  --tag-specifications "ResourceType=instance,  Tags=[{Key=Name,Value=$instances}]" --query "Instances[0].InstanceId"   --output text)
+INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t3.micro --security-group-ids sg-0771b87321713642a --tag-specifications "ResourceType=instance,  Tags=[{Key=Name,Value=$instances}]" --query "Instances[0].InstanceId"   --output text)
 if [ $instances != "frontend" ] 
 then
 IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations[0].Instances[0].PrivateIpAddress" --output text)
@@ -22,7 +22,7 @@ IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservation
     --hosted-zone-id $ZONE_ID \
     --change-batch '
     {
-    "comment":"Creating or Updating a record set for cognito endpoint"
+    "comment":"Creating or Updating a record set for cognito endpoint",
     "Changes":[{
     "Action":"UPSERT",
     "ResourceRecordSet":{
