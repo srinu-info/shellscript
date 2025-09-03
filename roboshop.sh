@@ -1,5 +1,5 @@
 #!/bin/bash
-
+export PATH=$PATH:/usr/local/bin
 AMI_ID="ami-09c813fb71547fc4f"
 SG_ID="sg-0771b87321713642a"
 INSTANCES=("mongodb" "redis" "mysql" "rabbitmq" "catalogue" "user" "cart" "shipping" "payment"
