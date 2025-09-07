@@ -74,13 +74,13 @@ systemctl start catalogue
 VALIDATE $? "service started...."
 
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongodb.repo 
-dnf install mongodb-mongosh -y &>>$LOG_FILE
+dnf install mongodb-mongosh -y &>>$Log_file
 VALIDATE $? "Installing MongoDB Client"
 
 STATUS=$(mongosh --host mongodb.svdvps.online --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 if [ $STATUS -lt 0 ]
 then
-    mongosh --host mongodb.svdvps.online </app/db/master-data.js &>>$LOG_FILE
+    mongosh --host mongodb.svdvps.online </app/db/master-data.js &>>$Log_file
     VALIDATE $? "Loading data into MongoDB"
 else
     echo -e "Data is already loaded ... $Y SKIPPING $N"
