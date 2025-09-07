@@ -33,7 +33,7 @@ fi
 }
 
 #---installation of mongodb
-cp mongo.repo /etc/yum.repos.d/mongo.repo 
+cp $SCRIPT_NAME/mongo.repo /etc/yum.repos.d/mongo.repo 
 VALIDATE() $? "Copiying moongo repo" 
 
 dnf install mongodb-org -y &>>$Log_file
