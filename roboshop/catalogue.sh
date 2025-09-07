@@ -78,7 +78,7 @@ cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongosh -y
 VALIDATE $? "Installing MongoDB Client"
 
-STATUS=$(mongosh --host mongodb.daws84s.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+STATUS=$(mongosh --host mongodb.svdvps.online --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 if [ $STATUS -lt 0 ]
 then
     mongosh --host mongodb.svdvps.online </app/db/master-data.js &>>$LOG_FILE
