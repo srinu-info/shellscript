@@ -29,9 +29,9 @@ read -s MYSWL_ROOT_PASSWD
 VALIDATE(){
     if [ $1 -eq 0 ]  
 then
-echo -e  "$G Successfully installed $2---$N" | tee -a $Log_file
+echo -e "$2 is ... $G SUCCESS $N" | tee -a $Log_file
 else
-echo -e "$R $2 Installation failed---$N" | tee -a $Log_file
+echo -e "$2 is ... $R FAILURE $N" | tee -a $Log_file
 exit 1
 fi    
 }
