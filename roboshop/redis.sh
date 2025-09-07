@@ -21,6 +21,8 @@ else
 echo -e "$G You are root user---$N" | tee -a $Log_file
 fi
 
+echo "please enter root password to set up"
+read -s MYSQL_ROOT_PASSWD
 #----
 VALIDATE(){
     if [ $1 -eq 0 ]  
@@ -38,7 +40,7 @@ dnf module enable redis:7 -y
 dnf install redis -y 
 VALIDATE $? "Installing redis.."
 
-sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf &>>$Log_file
+sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf
 VALIDATE $? "Changing port to access all "
 
 systemctl enable redis  &>>$Log_file
