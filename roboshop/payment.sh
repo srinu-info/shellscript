@@ -33,13 +33,13 @@ exit 1
 fi    
 }
 
-dnf install python3 gcc python3-devel -y &>>$LOG_FILE
+dnf install python3 gcc python3-devel -y &>>$Log_file
 VALIDATE $? "Install Python3 packages"
 
-id roboshop &>>$LOG_FILE
+id roboshop &>>$Log_file
 if [ $? -ne 0 ]
 then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$Log_file
     VALIDATE $? "Creating roboshop system user"
 else
     echo -e "System user roboshop already created ... $Y SKIPPING $N"
@@ -51,17 +51,17 @@ curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-
 
 rm -rf /app/*
 cd /app 
-unzip /tmp/payment.zip &>>$LOG_FILE
+unzip /tmp/payment.zip &>>$Log_file
 VALIDATE $? "unzip payment"
 
-pip3 install -r requirements.txt &>>$LOG_FILE
+pip3 install -r requirements.txt &>>$Log_file
 VALIDATE $? "installing dependencies"
 
-cp $SCRIPT_DIR/payment.service /etc/systemd/system/payment.service &>>$LOG_FILE
+cp $SCRIPT_DIR/payment.service /etc/systemd/system/payment.service &>>$Log_file
 VALIDATE $? "Copying Payment service"
 
 systemctl daemon-reload
 
-systemctl enable payment &>>$LOG_FILE
+systemctl enable payment &>>$Log_file
 systemctl start payment
 VALIDATE $? "starting paymnet"

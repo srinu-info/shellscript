@@ -68,8 +68,10 @@ systemctl daemon-reload
 
 systemctl enable shipping 
 systemctl start shipping
-
 VALIDATE $? "Start shipping service"
+dnf install mysql -y  &>>$Log_file
+VALIDATE $? "Install MySQL"
+
 mysql -h mysql.svdvps.online -u root -p$MYSQL_ROOT_PASSWD -e 'use cities'
 if [ $? -ne 0 ]
 then

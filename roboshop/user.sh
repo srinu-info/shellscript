@@ -71,5 +71,4 @@ VALIDATE $? "Copying service properties...."
 systemctl daemon-reload
 systemctl enable user  &>>$Log_file
 systemctl start user
-VALIDATE $? "service started....
-
+VALIDATE $? "service started...."
