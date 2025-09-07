@@ -23,7 +23,7 @@ echo -e "$G You are root user---$N" | tee -a $Log_file
 fi
 
 echo "please enter root password to set up"
-read -s MYSWL_ROOT_PASSWD
+read -s MYSQL_ROOT_PASSWD
 
 #----
 VALIDATE(){
