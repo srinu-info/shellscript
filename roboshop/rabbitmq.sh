@@ -35,7 +35,14 @@ echo -e "$2 is ... $R FAILURE $N" | tee -a $Log_file
 exit 1
 fi    
 }
-
+# Check if user "roboshop" already exists before adding
+rabbitmqctl list_users | grep -w roboshop &>/dev/null
+if [ $? -eq 0 ]; then
+    echo -e "$Y User 'roboshop' already exists. Skipping add_user.$N" | tee -a $Log_file
+else
+    rabbitmqctl add_user roboshop $RABBITMQ_ROOT_PASSWD
+    VALIDATE $? "Adding user roboshop"
+fi
 cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
 VALIDATE $? "Adding repo.."
 
