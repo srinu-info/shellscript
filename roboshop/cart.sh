@@ -34,25 +34,25 @@ fi
 }
 
 dnf module disable nodejs -y &>>$Log_file
-VALIDATE() $? "Disabling existing nodes"
+VALIDATE $? "Disabling existing nodes"
 
 dnf module enable nodejs:20 -y &>>$Log_file
-VALIDATE() $? "Enabling nodejs:20 to install"
+VALIDATE $? "Enabling nodejs:20 to install"
 
 dnf install nodejs -y &>>$Log_file
-VALIDATE() $? "Installing nodejs..."
+VALIDATE $? "Installing nodejs..."
 
 id roboshop
 if [ $? -ne 0 ]
 then 
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-VALIDATE() $? "Creating user to run roboshop"
+VALIDATE $? "Creating user to run roboshop"
 else
 echo -e "System user roboshop already existed.....$Y SKIPPING $N"
 fi
 
 mkdir -p /app  &>>$Log_file
-VALIDATE() $? "Creating Dir..."
+VALIDATE $? "Creating Dir..."
 
 curl -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip 
 VALIDATE $? "Downloading cart"
@@ -60,16 +60,16 @@ VALIDATE $? "Downloading cart"
 rm -rf /app/*
 cd /app 
 unzip /tmp/cart.zip
-VALIDATE() $? "Downloaded and extracted..."
+VALIDATE $? "Downloaded and extracted..."
 
 npm install 
 
 
 cd $SCRIPT_DIR/cart.service /etc/systemd/system/cart.service &>>$Log_file
-VALIDATE() $? "Copying service properties...."
+VALIDATE $? "Copying service properties...."
 
 systemctl daemon-reload
 systemctl enable cart  &>>$Log_file
 systemctl start cart
-VALIDATE() $? "service started....
+VALIDATE $? "service started....
 

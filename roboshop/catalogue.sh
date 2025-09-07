@@ -34,25 +34,25 @@ fi
 }
 
 dnf module disable nodejs -y &>>$Log_file
-VALIDATE() $? "Disabling existing nodes"
+VALIDATE $? "Disabling existing nodes"
 
 dnf module enable nodejs:20 -y &>>$Log_file
-VALIDATE() $? "Enabling nodejs:20 to install"
+VALIDATE $? "Enabling nodejs:20 to install"
 
 dnf install nodejs -y &>>$Log_file
-VALIDATE() $? "Installing nodejs..."
+VALIDATE $? "Installing nodejs..."
 
 id roboshop
 if [ $? -ne 0 ]
 then 
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$Log_file
-VALIDATE() $? "Creating user to run roboshop"
+VALIDATE $? "Creating user to run roboshop"
 else
 echo -e "System user roboshop already existed.....$Y SKIPPING $N"
 fi
 
 mkdir -p /app 
-VALIDATE() $? "Creating Dir..."
+VALIDATE $? "Creating Dir..."
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
 VALIDATE $? "Downloading Catalogue"
@@ -60,18 +60,18 @@ VALIDATE $? "Downloading Catalogue"
 rm -rf /app/* &>>$Log_file
 cd /app 
 unzip /tmp/catalogue.zip
-VALIDATE() $? "Downloaded and extracted..."
+VALIDATE $? "Downloaded and extracted..."
 
 npm install  
 
 
 cd $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$Log_file
-VALIDATE() $? "Copying service properties...."
+VALIDATE $? "Copying service properties...."
 
 systemctl daemon-reload
 systemctl enable catalogue 
 systemctl start catalogue
-VALIDATE() $? "service started....
+VALIDATE $? "service started....
 
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongosh -y

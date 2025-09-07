@@ -37,14 +37,14 @@ fi
 }
 
 cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
-VALIDATE() $? "Adding repo.."
+VALIDATE $? "Adding repo.."
 
 dnf install rabbitmq-server -y
-VALIDATE() $? "Installing rabbitmq.."
+VALIDATE $? "Installing rabbitmq.."
 
 systemctl enable rabbitmq-server
 systemctl start rabbitmq-server
-VALIDATE() $? "Starting mysql.."
+VALIDATE $? "Starting mysql.."
 
 rabbitmqctl add_user roboshop $RABBITMQ_ROOT_PASSWD
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"

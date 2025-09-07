@@ -37,26 +37,26 @@ fi
 }
 
 dnf install maven -y
-VALIDATE() $? "Installing maven.."
+VALIDATE $? "Installing maven.."
 
 id roboshop
 if [ $? -ne 0 ]
 then 
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$Log_file
-VALIDATE() $? "Creating user to run roboshop"
+VALIDATE $? "Creating user to run roboshop"
 else
 echo -e "System user roboshop already existed.....$Y SKIPPING $N"
 fi
 
 mkdir -p /app 
-VALIDATE() $? "Creating app dir..."
+VALIDATE $? "Creating app dir..."
 
 curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip 
 
 rm -rf /app/*
 cd /app 
 unzip /tmp/shipping.zip
-VALIDATE() $? "downloading unzipping code."
+VALIDATE $? "downloading unzipping code."
 
 mvn clean package 
 mv target/shipping-1.0.jar shipping.jar 
@@ -69,17 +69,17 @@ systemctl daemon-reload
 systemctl enable shipping 
 systemctl start shipping
 
-VALIDATE() $? "Start shipping service"
+VALIDATE $? "Start shipping service"
 mysql -h mysql.svdvps.online -u root -p$MYSQL_ROOT_PASSWD -e 'use cities'
 if [ $? -ne 0 ]
 then
 mysql -h mysql.svdvps.online  -uroot -p$MYSQL_ROOT_PASSWD < /app/db/schema.sql
 mysql -h mysql.svdvps.online  -uroot -p$MYSQL_ROOT_PASSWD < /app/db/app-user.sql 
 mysql -h mysql.svdvps.online  -uroot -p$MYSQL_ROOT_PASSWD < /app/db/master-data.sql
-VALIDATE() $? "Loading data"
+VALIDATE $? "Loading data"
 else
 echo -e "Data already loaded into MYSQL.. $Y SKIPPING $N"
 fi 
 
 systemctl restart shipping
-VALIDATE() $? "Restart shipping service"
+VALIDATE $? "Restart shipping service"

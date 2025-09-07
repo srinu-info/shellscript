@@ -36,14 +36,14 @@ fi
 dnf module disable redis -y &>>$LOG_FILE
 dnf module enable redis:7 -y
 dnf install redis -y 
-VALIDATE() $? "Installing redis.."
+VALIDATE $? "Installing redis.."
 
 sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf &>>$LOG_FILE
-VALIDATE() $? "Changing port to access all "
+VALIDATE $? "Changing port to access all "
 
 systemctl enable redis  &>>$LOG_FILE
 systemctl start redis 
-VALIDATE() $? "Start redis....."
+VALIDATE $? "Start redis....."
 
 END_TIME=$(date +%s)
 TOTAL_TIME=$(( $END_TIME - $START_TIME ))
