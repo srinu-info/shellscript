@@ -72,5 +72,5 @@ VALIDATE $? "Copying service properties...."
 systemctl daemon-reload
 systemctl enable cart  &>>$Log_file
 systemctl start cart
-VALIDATE $? "service started....
+VALIDATE $? "service started...."
 
