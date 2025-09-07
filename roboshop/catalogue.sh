@@ -71,11 +71,10 @@ VALIDATE $? "Copying service properties...."
 systemctl daemon-reload
 systemctl enable catalogue 
 systemctl start catalogue
-VALIDATE $? "service started....
+VALIDATE $? "service started...."
 
-cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
-
-dnf install mongodb-mongosh -y
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo 
+dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Installing MongoDB Client"
 
 STATUS=$(mongosh --host mongodb.svdvps.online --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
