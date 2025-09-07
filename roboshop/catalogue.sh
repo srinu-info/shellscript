@@ -26,9 +26,9 @@ fi
 VALIDATE(){
     if [ $1 -eq 0 ]  
 then
-echo -e  "$G Successfully installed $2---$N" | tee -a $Log_file
+echo -e "$2 is ... $G SUCCESS $N" | tee -a $Log_file
 else
-echo -e "$R $2 Installation failed---$N" | tee -a $Log_file
+echo -e "$2 is ... $R FAILURE $N" | tee -a $Log_file
 exit 1
 fi    
 }
@@ -65,7 +65,7 @@ VALIDATE $? "Downloaded and extracted..."
 npm install  
 
 
-cd $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$Log_file
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$Log_file
 VALIDATE $? "Copying service properties...."
 
 systemctl daemon-reload
@@ -74,6 +74,7 @@ systemctl start catalogue
 VALIDATE $? "service started....
 
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
+
 dnf install mongodb-mongosh -y
 VALIDATE $? "Installing MongoDB Client"
 
