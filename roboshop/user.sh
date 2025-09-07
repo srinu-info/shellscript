@@ -65,7 +65,7 @@ VALIDATE() $? "Downloaded and extracted..."
 npm install 
 
 
-cd $SCRIPT_DIR/user.service /etc/systemd/system/user.service &>>$Log_file
+cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service &>>$Log_file
 VALIDATE() $? "Copying service properties...."
 
 systemctl daemon-reload
