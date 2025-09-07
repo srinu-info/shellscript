@@ -53,5 +53,10 @@ systemctl enable rabbitmq-server
 systemctl start rabbitmq-server
 VALIDATE $? "Starting mysql.."
 
-rabbitmqctl add_user roboshop $RABBITMQ_ROOT_PASSWD
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+rabbitmqctl list_users | grep -w roboshop &>/dev/null
+if [ $? -eq 0 ]; then
+    echo -e "$Y User 'roboshop' already exists. Skipping add_user.$N" | tee -a $Log_file
+else
+    rabbitmqctl add_user roboshop $RABBITMQ_ROOT_PASSWD
+    VALIDATE $? "Adding user roboshop"
+fi
