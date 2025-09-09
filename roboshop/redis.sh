@@ -1,39 +1,7 @@
 #!/bin/bash
-START_TIME=$(date +%s)
-USERID=$(id -u)
-R="\e[31m"
-G="\e[32m"
-Y="\e[33m"
-N="\e[0m"
-LOG_FOLDER="/var/logs/roboshop-logs"
-SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
-Log_file="$LOG_FOLDER/$SCRIPT_NAME.log"
-
-mkdir -p $LOG_FOLDER
-echo "Script started executing at: $(date)"  
-
-
-if [ $USERID -ne 0 ]
-then
-echo -e "$R You are not root user,Please try with root user.-- $N" | tee -a $Log_file
-exit 1
-else
-echo -e "$G You are root user---$N" | tee -a $Log_file
-fi
-
-echo "please enter root password to set up"
-read -s MYSQL_ROOT_PASSWD
-#----
-VALIDATE(){
-    if [ $1 -eq 0 ]  
-then
-echo -e "$2 is ... $G SUCCESS $N" | tee -a $Log_file
-else
-echo -e "$2 is ... $R FAILURE $N" | tee -a $Log_file
-exit 1
-fi    
-}
-
+source ./common.sh
+app_name=redis
+check_root
 
 dnf module disable redis -y &>>$Log_file
 dnf module enable redis:7 -y
@@ -47,7 +15,4 @@ systemctl enable redis  &>>$Log_file
 systemctl start redis 
 VALIDATE $? "Start redis....."
 
-END_TIME=$(date +%s)
-TOTAL_TIME=$(( $END_TIME - $START_TIME ))
-
-echo -e "Script execution completed successfully. $Y time taken:  $TOTAL_TIME seconds $N" tee -a $Log_file
+print_time

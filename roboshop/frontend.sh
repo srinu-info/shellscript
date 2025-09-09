@@ -1,37 +1,7 @@
 #!/bin/bash
-
-USERID=$(id -u)
-R="\e[31m"
-G="\e[32m"
-Y="\e[33m"
-N="\e[0m"
-LOG_FOLDER="/var/logs/roboshop-logs"
-SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
-Log_file="$LOG_FOLDER/$SCRIPT_NAME.log"
-SCRIPT_DIR=$PWD
-
-mkdir -p $LOG_FOLDER
-echo "Script started executing at: $(date)"  
-
-
-if [ $USERID -ne 0 ]
-then
-echo -e "$R You are not root user,Please try with root user.-- $N" | tee -a $Log_file
-exit 1
-else
-echo -e "$G You are root user---$N" | tee -a $Log_file
-fi
-
-#----
-VALIDATE(){
-    if [ $1 -eq 0 ]  
-then
-echo -e "$2 is ... $G SUCCESS $N" | tee -a $Log_file
-else
-echo -e "$2 is ... $R FAILURE $N" | tee -a $Log_file
-exit 1
-fi    
-}
+source ./common.sh
+app_name=frontend
+check_root
 
 dnf module disable nginx -y &>>$Log_file
 VALIDATE $? "Disabling existing nginx"
@@ -61,3 +31,5 @@ VALIDATE $? "Copiying roboshop code"
 
 systemctl restart nginx  &>>$Log_file
 VALIDATE $? "Restarting nginx server"
+
+print_time

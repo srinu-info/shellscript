@@ -1,67 +1,76 @@
 #!/bin/bash
 
-USERID=$(id -u)
-R="\e[31m"
-G="\e[32m"
-Y="\e[33m"
-N="\e[0m"
-LOG_FOLDER="/var/logs/roboshop-logs"
-SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
-Log_file="$LOG_FOLDER/$SCRIPT_NAME.log"
-SCRIPT_DIR=$PWD
+# USERID=$(id -u)
+# R="\e[31m"
+# G="\e[32m"
+# Y="\e[33m"
+# N="\e[0m"
+# LOG_FOLDER="/var/logs/roboshop-logs"
+# SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
+# Log_file="$LOG_FOLDER/$SCRIPT_NAME.log"
+# SCRIPT_DIR=$PWD
 
-mkdir -p $LOG_FOLDER
-echo "Script started executing at: $(date)"  
-
-
-if [ $USERID -ne 0 ]
-then
-echo -e "$R You are not root user,Please try with root user.-- $N" | tee -a $Log_file
-exit 1
-else
-echo -e "$G You are root user---$N" | tee -a $Log_file
-fi
-
-#----
-VALIDATE(){
-    if [ $1 -eq 0 ]  
-then
-echo -e "$2 is ... $G SUCCESS $N" | tee -a $Log_file
-else
-echo -e "$2 is ... $R FAILURE $N" | tee -a $Log_file
-exit 1
-fi    
-}
-
-dnf install python3 gcc python3-devel -y &>>$Log_file
-VALIDATE $? "Install Python3 packages"
-
-id roboshop &>>$Log_file
-if [ $? -ne 0 ]
-then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$Log_file
-    VALIDATE $? "Creating roboshop system user"
-else
-    echo -e "System user roboshop already created ... $Y SKIPPING $N"
-fi
+# mkdir -p $LOG_FOLDER
+# echo "Script started executing at: $(date)"  
 
 
-mkdir -p /app 
-curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip 
+# if [ $USERID -ne 0 ]
+# then
+# echo -e "$R You are not root user,Please try with root user.-- $N" | tee -a $Log_file
+# exit 1
+# else
+# echo -e "$G You are root user---$N" | tee -a $Log_file
+# fi
 
-rm -rf /app/*
-cd /app 
-unzip /tmp/payment.zip &>>$Log_file
-VALIDATE $? "unzip payment"
+# #----
+# VALIDATE(){
+#     if [ $1 -eq 0 ]  
+# then
+# echo -e "$2 is ... $G SUCCESS $N" | tee -a $Log_file
+# else
+# echo -e "$2 is ... $R FAILURE $N" | tee -a $Log_file
+# exit 1
+# fi    
+# }
 
-pip3 install -r requirements.txt &>>$Log_file
-VALIDATE $? "installing dependencies"
+# dnf install python3 gcc python3-devel -y &>>$Log_file
+# VALIDATE $? "Install Python3 packages"
 
-cp $SCRIPT_DIR/payment.service /etc/systemd/system/payment.service &>>$Log_file
-VALIDATE $? "Copying Payment service"
+# id roboshop &>>$Log_file
+# if [ $? -ne 0 ]
+# then
+#     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$Log_file
+#     VALIDATE $? "Creating roboshop system user"
+# else
+#     echo -e "System user roboshop already created ... $Y SKIPPING $N"
+# fi
 
-systemctl daemon-reload
 
-systemctl enable payment &>>$Log_file
-systemctl start payment
-VALIDATE $? "starting paymnet"
+# mkdir -p /app 
+# curl -L -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip 
+
+# rm -rf /app/*
+# cd /app 
+# unzip /tmp/payment.zip &>>$Log_file
+# VALIDATE $? "unzip payment"
+
+# pip3 install -r requirements.txt &>>$Log_file
+# VALIDATE $? "installing dependencies"
+
+# cp $SCRIPT_DIR/payment.service /etc/systemd/system/payment.service &>>$Log_file
+# VALIDATE $? "Copying Payment service"
+
+# systemctl daemon-reload
+
+# systemctl enable payment &>>$Log_file
+# systemctl start payment
+# VALIDATE $? "starting paymnet"
+
+source ./common.sh
+app_name=payment
+
+check_root
+app_setup
+python_setup
+systemd_setup
+print_time
