@@ -33,11 +33,11 @@ exit 1
 fi    
 }
 
-FILES_TO_DELETE=$(find S$SOURCE_DIR -name "*.log" -mtime +14)
+FILES_TO_DELETE=$(find $SOURCE_DIR -name "*.log" -mtime +14)
 
 while IFS = read -r filepath
 do
-echo -e "Deleting files : $filepath
+echo -e "Deleting files : $filepath"
 rm -rf $filepath
 done <<< $FILES_TO_DELETE
 
