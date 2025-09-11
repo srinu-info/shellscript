@@ -38,18 +38,18 @@ echo "Script started executing at: $(date)"
 USAGE(){
 	echo -e "$R USAGE: $Y sh fine.sh <source_dir> <dist_dir> <day(Optional)>"
 }
-if [ $# -lt 2] 
+if [ $# -lt 2 ] 
 	then
 	USAGE
 fi
 
-if [! -d $SCRIPT_DIR ]
+if [ ! -d $SCRIPT_DIR ]
 then 
 echo -e "$R Source directory $SOURCE_DIR not exist..Please check $N"
 exist 1
 fi
 
-if [! -d $DEST_DIR ]
+if [ ! -d $DEST_DIR ]
 then 
 echo -e "$R Destimation directory $DEST_DIR not exist..Please check $N"
 exist 1
@@ -72,7 +72,6 @@ do
 echo  "Deleting files : $filepath" | tee -a $LOG_FILE
 rm -rf $filepath
 done <<< $FILES
-
 echo -e "log filed older than $DAYS from source directory removed...$G Success $N"
 else
 echo -e "Zip file Creation...$R FAILED $N"
