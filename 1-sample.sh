@@ -24,7 +24,7 @@ echo "PID of last cammand running in background: $!"
 
 input=$1
 
-if [ input -gt 10 ]
+if [ $input -gt 10 ]
 then 
 	echo " given input number is grater than 10"
 else
