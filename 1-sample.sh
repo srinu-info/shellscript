@@ -24,12 +24,11 @@ fi
 VALIDATE(){
 	if [ $1 -eq 0 ]
 	then
-		echo -e "nginx installed $G Successfully $N" &>>$LOG_FILE
+		echo -e "$2 installed $G Successfully $N" &>>$LOG_FILE
 	else
-		echo -e "$G nginx installation failed..$N" &>>$LOG_FILE
+		echo -e "$G $2 installation failed..$N" &>>$LOG_FILE
 		exit 1
 	fi
-
 }
 
 dnf list installed nginx &>>$LOG_FILE
