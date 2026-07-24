@@ -9,7 +9,7 @@ echo "All movies: ${Movies[@]}"
 
 Num1=1
 Num2=99
-sum=((Num1+Num2))
+sum=$((Num1+Num2))
 echo "Sum=$sum"
 
 echo "Timestamp =$(date)"
