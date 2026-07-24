@@ -1,32 +1,31 @@
 #!/bin/bash
 
-user=srinu
-echo "Hello: $user"
+USERID=$(id -u)
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
 
-Movies=("bahubali" "pushpa")
-echo "firts film :${Movies[0]}"
-echo "All movies: ${Movies[@]}"
-
-Num1=1
-Num2=99
-sum=$((Num1+Num2))
-echo "Sum=$sum"
-
-echo "Timestamp =$(date)"
-
-echo "All passing paramters :$@"
-echo "number of paramters passed:$#"
-echo "user who running this script:$USER"
-echo "script name: $0"
-echo "PID of the script: $$"
-sleep 10 &
-echo "PID of last cammand running in background: $!"
-
-input=$1
-
-if [ $input -gt 10 ]
-then 
-	echo " given input number is grater than 10"
+if [ $USERID -ne 0 ]
+then
+	echo -e "$R ERROR: You dont have access $N"
+	exit 1
 else
-	echo " given number is smaller than 10"
+	echo -e "$G You have root access $N"
+fi
+
+dnf list installed nginx
+if [ $? -ne 0 ] 
+then 
+	echo " $G nginx not available.. Installing now...$N"
+	dnf install nginx -y
+	if [ $? -eq 0 ]
+	then
+		echo "nginx installed $G Successfully $N"
+	else
+		echo "$G nginx installation failed..$N"
+		exit 1
+	fi
+else
+	echo " $Y  nginx already installed $N"
 fi
