@@ -17,15 +17,15 @@ fi
 dnf list installed nginx
 if [ $? -ne 0 ] 
 then 
-	echo " $G nginx not available.. Installing now...$N"
+	echo -e " $G nginx not available.. Installing now...$N"
 	dnf install nginx -y
 	if [ $? -eq 0 ]
 	then
-		echo "nginx installed $G Successfully $N"
+		echo -e "nginx installed $G Successfully $N"
 	else
-		echo "$G nginx installation failed..$N"
+		echo -e "$G nginx installation failed..$N"
 		exit 1
 	fi
 else
-	echo " $Y  nginx already installed $N"
+	echo -e " $Y  nginx already installed $N"
 fi
