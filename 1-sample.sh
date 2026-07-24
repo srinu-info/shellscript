@@ -32,11 +32,11 @@ VALIDATE(){
 
 }
 
-dnf list installed nginx
+dnf list installed nginx &>>$LOG_FILE
 if [ $? -ne 0 ] 
 then 
 	echo -e " $G nginx not available.. Installing now...$N" &>>$LOG_FILE
-	dnf install nginx -y
+	dnf install nginx -y &>>$LOG_FILE
 	VALIDATE $? "nginx"
 else
 	echo -e " $Y  nginx already installed $N" &>>$LOG_FILE
