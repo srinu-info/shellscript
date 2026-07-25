@@ -33,7 +33,7 @@ do
 done < $SOURCE/cart.log
 echo "-----------------------"
 
-FILE=$(find $SOURCE -type f -mtime +14)
+FILE=$(find $SOURCE -name "*.log" -type f -mtime +14)
 while IFS= read -r filepath
 do
 	rm -rf $filepath
