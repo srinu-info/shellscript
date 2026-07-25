@@ -45,7 +45,7 @@
 SOURCE=$1
 DEST=$2
 DAYS=${3:-14}
-if [ ! -d $SOURCE || ! -d $DEST]
+if [ ! -d $SOURCE ]
 then
 	echo "Source or Dest directory not exits"
 fi
@@ -57,7 +57,7 @@ then
 	ZIP_FILE="$DEST/app-logs-$TIMESTAMP.zip"
 	find $SOURCE -type f -name "*.log" -mtime $DAYS | zip -@ $ZIP_FILE
 
-	if[ -z $ZIP_FILE ]
+	if[ -f $ZIP_FILE ]
 	then
 		echo "FILES BACKUP SUCCESSFULL"
 		echo "REMOVING FILES"
