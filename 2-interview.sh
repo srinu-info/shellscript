@@ -48,6 +48,7 @@ DAYS=${3:-14}
 if [ ! -d $SOURCE ]
 then
 	echo "Source or Dest directory not exits"
+	exit 1
 fi
 FILES=$(find $SOURCE -type f -name "*.log" -mtime $DAYS)
 
@@ -67,9 +68,11 @@ then
 		done <<< $FILES
 	else
 		echo "ZIP FAILED"
+		exit 1
 	fi
 else
 echo "Files not found"
+exit 1
 fi
 	
 
