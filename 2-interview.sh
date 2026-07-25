@@ -26,15 +26,52 @@
 
 # count=$(ls | wc -l)
 # echo $count
-SOURCE="/home/ec2-user/app-logs"
-while IFS= read -r line
-do
-	echo $line
-done < $SOURCE/cart.log
-echo "-----------------------"
+# echo "-----------------------"
+# SOURCE="/home/ec2-user/app-logs"
+# while IFS= read -r line
+# do
+# 	echo $line
+# done < $SOURCE/cart.log
+# echo "-----------------------"
 
-FILE=$(find $SOURCE -name "*.log" -type f -mtime +14)
-while IFS= read -r filepath
-do
-	rm -rf $filepath
-done <<< $FILE
+# FILE=$(find $SOURCE -name "*.log" -type f -mtime +14)
+# while IFS= read -r filepath
+# do
+# 	rm -rf $filepath
+# done <<< $FILE
+
+# echo "-----------------------"
+
+SOURCE=$1
+DEST=$2
+DAYS=${3:-14}
+if [ ! -d $SOURCE || ! -d $DEST]
+then
+	echo "Source or Dest directory not exits"
+fi
+FILES=$(find $SOURCE -type f -name "*.log" -mtime $DAYS)
+
+if [ -n $FILES ]
+then
+	TIMESTAMP=$(date +%F-%H-%M-%S)
+	ZIP_FILE="$DEST/app-logs-$TIMESTAMP.zip"
+	find $SOURCE -type f -name "*.log" -mtime $DAYS | zip -@ $ZIP_FILE
+
+	if[ -z $ZIP_FILE ]
+	then
+		echo "FILES BACKUP SUCCESSFULL"
+		echo "REMOVING FILES"
+		while IFS= read -r filepath
+		do
+			rm -rf $filepath
+		done <<< $FILES
+	else
+		echo "ZIP FAILED"
+	fi
+else
+echo "Files not found"
+fi
+	
+
+
+
