@@ -52,7 +52,7 @@ then
 fi
 FILES=$(find $SOURCE -type f -name "*.log" -mtime $DAYS)
 
-if [ -n "$FILES" ]
+if [ -n $FILES ]
 then
 	TIMESTAMP=$(date +%F-%H-%M-%S)
 	ZIP_FILE="$DEST/app-logs-$TIMESTAMP.zip"
