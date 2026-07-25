@@ -5,6 +5,7 @@ servers=("nginx" "git")
 for server in "${servers[@]}"
 do 
 	systemctl status $server
+	exit 1
 done
 
 echo "------------------------------"
