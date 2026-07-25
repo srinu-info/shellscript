@@ -56,7 +56,7 @@ if [ -n $FILES ]
 then
 	TIMESTAMP=$(date +%F-%H-%M-%S)
 	ZIP_FILE="$DEST/app-logs-$TIMESTAMP.zip"
-	find $SOURCE -type f -name "*.log" -mtime $DAYS | zip -@ "$ZIP_FILE"
+	find $SOURCE -name "*.log" -mtime +$DAYS | zip -@ "$ZIP_FILE"
 
 	if [ -f $ZIP_FILE ]
 	then
