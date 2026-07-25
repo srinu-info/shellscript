@@ -1,6 +1,6 @@
 #!/bin/bash
 
-servers=("nginx" "mysql")
+servers=("nginx" "git")
 
 for server in "${servers[@]}"
 do 
@@ -16,7 +16,7 @@ echo "find error in file"
 
 service=nginx
 
-if  ! sysemctl is-active --quite $service 
+if  ! systemctl is-active --quite $service 
 then
 systemctl restart $service
 else
