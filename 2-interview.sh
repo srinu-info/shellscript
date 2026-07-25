@@ -27,7 +27,7 @@
 # count=$(ls | wc -l)
 # echo $count
 SOURCE="/home/ec2-user/app-logs"
-while IFS=read -r line
+while IFS= read -r line
 do
 	echo $line
 done < $SOURCE/cart.log
