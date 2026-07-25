@@ -26,13 +26,13 @@
 
 # count=$(ls | wc -l)
 # echo $count
-
+SOURCE="/home/ec2-user/app-logs"
 while IFS=read -r line
 do
 	echo $line
-done < cart.log
+done < $SOURCE/cart.log
 echo "-----------------------"
-SOURCE="/home/ec2-user/app-logs"
+
 FILE=$(find $SOURCE -type f -mtime +14)
 while IFS= read -r filepath
 do
