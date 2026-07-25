@@ -4,7 +4,7 @@ servers=("nginx" "git")
 
 for server in "${servers[@]}"
 do 
-	systemctl is-active --quite $service 
+	systemctl is-active --quiet $service 
 done
 
 echo "------------------------------"
@@ -16,7 +16,7 @@ echo "find error in file"
 
 service=nginx
 
-if  ! systemctl is-active --quite $service 
+if  ! systemctl is-active --quiet $service 
 then
 systemctl restart $service
 else
