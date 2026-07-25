@@ -4,7 +4,7 @@ servers=("nginx" "mysql")
 
 for server in "${servers[@]}"
 do 
-	ssh $s uptime
+	systemctl status $server
 done
 
 echo "------------------------------"
@@ -16,7 +16,7 @@ echo "find error in file"
 
 service=nginx
 
-if [! sysemctl is-active --quite $service ]
+if [ ! sysemctl is-active --quite $service ]
 then
 systemctl restart $service
 else
