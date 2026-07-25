@@ -45,14 +45,14 @@
 SOURCE=$1
 DEST=$2
 DAYS=${3:-14}
-if [ ! -d $SOURCE ]
+if [ ! -d "$SOURCE" ] || [ ! -d "$DEST" ]
 then
 	echo "Source or Dest directory not exits"
 	exit 1
 fi
-FILES=$(find $SOURCE -type f -name "*.log" -mtime $DAYS)
+FILES=$(find $SOURCE -type f -name "*.log" -mtime +$DAYS)
 
-if [ -n $FILES ]
+if [ -n "$FILES" ]
 then
 	TIMESTAMP=$(date +%F-%H-%M-%S)
 	ZIP_FILE="$DEST/app-logs-$TIMESTAMP.zip"
