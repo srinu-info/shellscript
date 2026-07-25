@@ -16,7 +16,7 @@ echo "find error in file"
 
 service=nginx
 
-if [ ! sysemctl is-active --quite $service ]
+if  ! sysemctl is-active --quite $service 
 then
 systemctl restart $service
 else
