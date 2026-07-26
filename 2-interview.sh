@@ -14,15 +14,15 @@
 
 #  echo "-----------------------------"
 
-service=nginx
+# service=nginx
 
-if  ! systemctl is-active --quiet $service 
-then
-systemctl restart $service
-else
-echo "service is Active"
-fi
-echo "--------------------------------"
+# if  ! systemctl is-active --quiet $service 
+# then
+# systemctl restart $service
+# else
+# echo "service is Active"
+# fi
+# echo "--------------------------------"
 
 # count=$(ls | wc -l)
 # echo $count
@@ -75,7 +75,11 @@ echo "-----------------------"
 # exit 1
 # fi
 	
-# echo "-----------------------"
-# SERVER=(nginx)
+echo "-----------------------"
+servers=("nginx" "git")
 
+for server in "${servers[@]}"
+do 
+	ping -c 2 $server
+done
 
