@@ -17,6 +17,6 @@ do
 	MOUNT=$(echo $line | awk '{print $7F}' )
 	if [ "$USE" -ge "$THRESHOLD" ]
 	then
-		echo "ALERT: Disk Usage on $MOUNT is ${USE}%"
+		echo "ALERT: Disk Usage on $MOUNT is $USE%"
 	fi
-done 
+done <<< $DISK
