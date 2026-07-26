@@ -7,7 +7,7 @@ do
 	USAGE=${use%\%}
 done <<<$DISK
 
-if [ "$USAGE" -gt "$THRESHOLD" ]
+if [ "$USAGE" -ge "$THRESHOLD" ]
 then
 	echo "ALERT: Disk Usage on $mount is ${USAGE}%"
 fi
