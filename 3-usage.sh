@@ -24,11 +24,11 @@
 # done <<< $DISKSPACE
 echo "------------***************---------------------"
 THRESHOLD=30
-free -h | awk "/Mem:/"
 
-MEMORY=$($3/$2*100)
+
+MEMORY=$(free -h | awk '/Mem:/ {print int($3/$2 *100)}')
 
 if [ "$MEMORY" -ge "$THRESHOLD "]
 then
-	echo "ALERT: Memory is FULL"
+	echo "ALERT: Memory is $MEMORY"
 fi
