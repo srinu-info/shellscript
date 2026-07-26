@@ -76,7 +76,7 @@ echo "-----------------------"
 # fi
 	
 echo "-----------------------"
-servers=("nginx" "git")
+servers=("nginx")
 
 for server in "${servers[@]}"
 do 
