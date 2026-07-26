@@ -37,7 +37,7 @@ echo "------------***************---------------------"
 
 echo "------------***************---------------------"
 THRESHOLD=1
-CPU=$(top | awk -F',' '/Cpu\(s\)/ {gsub("%","",$4); print 100-int($4)}')
+CPU=$(top -bn1 | awk -F',' '/Cpu\(s\)/ {gsub("%","",$4); print 100-int($4)}')
 if [ $CPU -ge "$THRESHOLD" ]
 then
 	echo "CPU USAGE $CPU"
