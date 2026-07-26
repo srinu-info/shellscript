@@ -23,14 +23,24 @@
 # 	fi
 # done <<< $DISKSPACE
 echo "------------***************---------------------"
-THRESHOLD=50
+# THRESHOLD=50
 
 
-MEMORY=$(free -h | awk '/Mem:/ {print int($3/$2 *100)}')
+# MEMORY=$(free -h | awk '/Mem:/ {print int($3/$2 *100)}')
 
-if [ "$MEMORY" -ge "$THRESHOLD" ]
+# if [ "$MEMORY" -ge "$THRESHOLD" ]
+# then
+# 	echo "ALERT: Memory is $MEMORY"
+# else
+# 	echo " Memory is Normal $MEMORY"
+# fi
+
+echo "------------***************---------------------"
+THRESHOLD=1
+CPU=$(top | awk -F',' '/Cpu\(s\)/ {gsub("%","",$4); print 100-int($4)}')
+if [ $CPU -ge "$THRESHOLD" ]
 then
-	echo "ALERT: Memory is $MEMORY"
+	echo "CPU USAGE $CPU"
 else
-	echo " Memory is Normal $MEMORY"
+	echo "CPU IS NORMAL"
 fi
