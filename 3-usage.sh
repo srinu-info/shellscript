@@ -1,6 +1,7 @@
 #!/bin/bash
 THRESHOLD=70
 DISK=$(df -hP | tail -n +2)
+DISKSPACE=$(df -hT | grep -v filesystem)
 
 df -hP | tail -n +2 | while read -r filesystem size used avail use mount
 do
@@ -19,4 +20,4 @@ do
 	then
 		echo "ALERT: Disk Usage on $MOUNT is $USE%"
 	fi
-done <<< $DISK
+done <<< $DISKSPACE
