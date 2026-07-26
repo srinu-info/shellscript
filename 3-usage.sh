@@ -5,7 +5,7 @@ DISK=$(df -hP | tail -n +2)
 while IFS= read line
 do
 	USAGE=${use%\%}
-done <<<$DISK
+done <<< $DISK
 
 if [ "$USAGE" -ge "$THRESHOLD" ]
 then
