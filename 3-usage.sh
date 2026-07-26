@@ -1,7 +1,7 @@
 #!/bin/bash
 THRESHOLD=70
 DISK=$(df -hP | tail -n +2)
-DISKSPACE=$(df -hT | grep -v filesystem)
+
 
 df -hP | tail -n +2 | while read -r filesystem size used avail use mount
 do
@@ -12,9 +12,10 @@ do
 	fi
 done 
 echo "----------------"
+DISKSPACE=$(df -hT | grep -v Filesystem)
 while IFS= read line
 do
-	USE=$(echo $line | awk '{print $6F}'|cut -d "%" -f1)
+	USE=$(echo $line | awk '{print $6F}'| cut -d "%" -f1)
 	MOUNT=$(echo $line | awk '{print $7F}' )
 	if [ $USE -ge $THRESHOLD ]
 	then
