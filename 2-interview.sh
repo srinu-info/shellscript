@@ -42,44 +42,46 @@
 
 echo "-----------------------"
 
-# SOURCE=$1
-# DEST=$2
-# DAYS=${3:-14}
-# if [ ! -d "$SOURCE" ] || [ ! -d "$DEST" ]
-# then
-# 	echo "Source or Dest directory not exits"
-# 	exit 1
-# fi
-# FILES=$(find $SOURCE -type f -name "*.log" -mtime +$DAYS)
+SOURCE=$1
+DEST=$2
+DAYS=${3:-14}
+if [ ! -d "$SOURCE" ] || [ ! -d "$DEST" ]
+then
+	echo "Source or Dest directory not exits"
+	exit 1
+fi
+FILES=$(find $SOURCE -type f -name "*.log" -mtime +$DAYS)
 
-# if [ -n "$FILES" ]
-# then
-# 	TIMESTAMP=$(date +%F-%H-%M-%S)
-# 	ZIP_FILE="$DEST/app-logs-$TIMESTAMP.zip"
-# 	find $SOURCE -name "*.log" -mtime +$DAYS | zip -@ "$ZIP_FILE"
+if [ -n "$FILES" ]
+then
+	TIMESTAMP=$(date +%F-%H-%M-%S)
+	ZIP_FILE="$DEST/app-logs-$TIMESTAMP.zip"
+	find $SOURCE -name "*.log" -mtime +$DAYS | zip -@ "$ZIP_FILE"
 
-# 	if [ -f $ZIP_FILE ]
-# 	then
-# 		echo "FILES BACKUP SUCCESSFULL"
-# 		echo "REMOVING FILES"
-# 		while IFS= read -r filepath
-# 		do
-# 			rm -rf $filepath
-# 		done <<< $FILES
-# 	else
-# 		echo "ZIP FAILED"
-# 		exit 1
-# 	fi
-# else
-# echo "Files not found"
-# exit 1
-# fi
+	if [ -f $ZIP_FILE ]
+	then
+		echo "FILES BACKUP SUCCESSFULL"
+		echo "REMOVING FILES"
+		while IFS= read -r filepath
+		do
+			rm -rf $filepath
+		done <<< $FILES
+	else
+		echo "ZIP FAILED"
+		exit 1
+	fi
+else
+echo "Files not found"
+exit 1
+fi
 	
-echo "-----------------------"
-servers=("nginx")
+# echo "-----------------------"
+# servers=("google.com" "amazon.com")
 
-for server in "${servers[@]}"
-do 
-	ping -c 2 $server
-done
+# for server in "${servers[@]}"
+# do 
+# 	ping -c 2 $server
+# done
 
+# --------
+# find / -type f -exec du -h {} + | sort -hr | head -n 5
