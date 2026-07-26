@@ -28,7 +28,7 @@ THRESHOLD=30
 
 MEMORY=$(free -h | awk '/Mem:/ {print int($3/$2 *100)}')
 
-if [ "$MEMORY" -ge "$THRESHOLD "]
+if [ "$MEMORY" -ge "$THRESHOLD" ]
 then
 	echo "ALERT: Memory is $MEMORY"
 fi
